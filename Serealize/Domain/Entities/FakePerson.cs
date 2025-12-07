@@ -4,12 +4,12 @@ namespace Serealize.Domain.Entities
 {
     public class FakePerson
     {
-        string Name { get; set; }
-        string Surname { get; set; }
-        int Age { get; set; }
-        string Email { get; set; }
-        string Adress { get; set; }
-        private string _path = @"C:/Users/Admin/source/repos/b1mq/SerealizeDeserealize/Serealize/Domain/Entities/DataBlank/";
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public int Age { get; set; }
+        public string Email { get; set; }
+        public string Adress { get; set; }
+        private string _path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Domain", "Entities", "DataBlank/");
         public FakePerson()
         {
             Name = string.Empty;
@@ -41,6 +41,16 @@ namespace Serealize.Domain.Entities
             var JsonAdresses = JsonSerializer.Deserialize<List<string>>(Adresses);
             Random rand = new Random();
             return new FakePerson(JsonNames![rand.Next(0,JsonNames.Count)], JsonSurnames![rand.Next(0, JsonSurnames.Count)], JsonAges![rand.Next(0,JsonAges.Count)], JsonEmails![rand.Next(0, JsonEmails.Count)], JsonAdresses![rand.Next(0, JsonAdresses.Count)]);
+        }
+        public void SavePersonInJson()
+        {
+            var Json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
+            string FullPath = GetPath() + "Person.json";
+            File.WriteAllText(FullPath, Json);
+        }
+        public void SavePersonInJson(FakePerson person)
+        {
+            person.SavePersonInJson();
         }
         public override string ToString()
         {

@@ -15,5 +15,7 @@ using Serealize.Domain.Entities;
 //MyManager.LoadAlbumsFromJson(@"C:/Users/Admin/Desktop/Receipt", "Album");
 
 var fp = new FakePerson();
-var s = fp.GeneratePerson();
-Console.WriteLine(s);
+
+fp = fp.GeneratePerson();
+Console.WriteLine(fp);
+fp.SavePersonInJson();
